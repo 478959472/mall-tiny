@@ -20,8 +20,8 @@ import java.util.Date;
  */
 @Service
 public class UmsResourceServiceImpl extends ServiceImpl<UmsResourceMapper, UmsResource>implements UmsResourceService {
-    @Autowired
-    private UmsAdminCacheService adminCacheService;
+//    @Autowired
+//    private UmsAdminCacheService adminCacheService;
     @Override
     public boolean create(UmsResource umsResource) {
         umsResource.setCreateTime(new Date());
@@ -32,14 +32,12 @@ public class UmsResourceServiceImpl extends ServiceImpl<UmsResourceMapper, UmsRe
     public boolean update(Long id, UmsResource umsResource) {
         umsResource.setId(id);
         boolean success = updateById(umsResource);
-        adminCacheService.delResourceListByResource(id);
         return success;
     }
 
     @Override
     public boolean delete(Long id) {
         boolean success = removeById(id);
-        adminCacheService.delResourceListByResource(id);
         return success;
     }
 

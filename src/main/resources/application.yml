@@ -48,3 +48,15 @@ secure:
       - /admin/register
       - /admin/info
       - /admin/logout
+      - /laihua/login
+
+# http 连接池
+http:
+  # 最大连接数 200
+  maxConnectionTotal: 500
+  # 并发数
+  routeMaxCount: 500
+  # 创建连接超时时间
+  connectionTimeout: 1000
+  # 数据传输的最长时间
+  readTimeout: 10000

@@ -27,8 +27,8 @@ import java.util.List;
  */
 @Service
 public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole>implements UmsRoleService {
-    @Autowired
-    private UmsAdminCacheService adminCacheService;
+//    @Autowired
+//    private UmsAdminCacheService adminCacheService;
     @Autowired
     private UmsRoleMenuRelationService roleMenuRelationService;
     @Autowired
@@ -48,7 +48,6 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole>imple
     @Override
     public boolean delete(List<Long> ids) {
         boolean success = removeByIds(ids);
-        adminCacheService.delResourceListByRoleIds(ids);
         return success;
     }
 
@@ -111,7 +110,6 @@ public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole>imple
             relationList.add(relation);
         }
         roleResourceRelationService.saveBatch(relationList);
-        adminCacheService.delResourceListByRole(roleId);
         return resourceIds.size();
     }
 }
