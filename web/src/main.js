@@ -6,8 +6,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 import VCharts from 'v-charts'
+import iView from 'iview'
 
 import '@/styles/index.scss' // global css
+import 'iview/dist/styles/iview.css';
 
 import App from './App'
 import router from './router'
@@ -18,6 +20,7 @@ import '@/permission' // permission control
 
 Vue.use(ElementUI, { locale })
 Vue.use(VCharts)
+Vue.use(iView)
 
 Vue.config.productionTip = false
 

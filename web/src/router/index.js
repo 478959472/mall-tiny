@@ -103,6 +103,21 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path:'/test',
+    component: Layout,
+    redirect: '/test/video',
+    name: 'test',
+    meta: {title: '演示', icon: 'product'},
+    children: [
+      {
+        path: 'video',
+        name: 'video',
+        component: () => import('@/views/test/video/index'),
+        meta: {title: '我的作品', icon: 'product-list'}
+      }
+    ]
+  },
   {path: '*', redirect: '/404', hidden: true}
 ]
 

@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 
 /**
@@ -118,4 +119,39 @@ public class RestUtils {
         ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         return res.getBody();
     }
+
+    public static String get(String url , JSONObject json ,RestTemplate restTemplate , HttpHeaders headers) {
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<JSONObject> entity = new HttpEntity<>(json , headers);
+        ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        return res.getBody();
+    }
+
+    public static JSONObject httpRequest(String url, JSONObject json, RestTemplate restTemplate, HttpMethod method, HttpHeaders httpHeaders) {
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity<Object> entity = new HttpEntity<>(json, httpHeaders);
+        ApiLog apiLog = ApiLog.buildApiLogStart(url, json == null ? "" : JSON.toJSONString(json));
+        ResponseEntity<String> res;
+        try {
+            res = restTemplate.exchange(url, method, entity, String.class);
+        } catch (HttpClientErrorException e) {
+            LOG.error("post 错误\n" + url + "\n" + json, e);
+            String errorRes = e.getResponseBodyAsString();
+            LOG.info(errorRes);
+            apiLog.failLog(errorRes);
+            return null;
+        }
+        if (res.getStatusCode().is2xxSuccessful()) {
+            String resBody = res.getBody();
+            apiLog.successLog(Objects.requireNonNull(resBody));
+            HttpHeaders headers = res.getHeaders();
+            String set_cookie = headers.getFirst(HttpHeaders.SET_COOKIE);
+            JSONObject resJson = JSON.parseObject(resBody);
+            resJson.put("cookie",set_cookie);
+            return resJson;
+        }
+        return null;
+    }
+
+
 }

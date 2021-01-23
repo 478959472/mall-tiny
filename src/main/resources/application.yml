@@ -49,6 +49,7 @@ secure:
       - /admin/info
       - /admin/logout
       - /laihua/login
+      - /laihua/my-videos
 
 # http 连接池
 http:

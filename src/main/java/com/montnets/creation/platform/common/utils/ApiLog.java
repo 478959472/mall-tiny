@@ -74,7 +74,7 @@ public class ApiLog {
         Long responseTime = Duration.between(startTime, localDateTime).toMillis();
         log.append("Time:").append(responseTime).append("\n");
         log.append("Status:").append("success").append("\n");
-        log.append("结束时间：" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS").format(localDateTime)).append("\n");
+        log.append("结束时间：").append(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS").format(localDateTime)).append("\n");
         LOG.info(log.toString());
     }
 
