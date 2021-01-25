@@ -1,7 +1,8 @@
 <template>
   <div :class="[type === 'horizantal' ? 'vm-card-horizantal' : 'vm-card-vertical' , 'vm-panel']">
     <div class="card-img">
-      <img :src="img" alt="">
+<!--      <img :src="img" alt="">-->
+      <video :src="video"  controls="controls" type="video/mp4"></video>
       <div v-if="editable && type == 'vertical'" class="control">
         <span class="edit">
           <a :href="editUrl">
@@ -16,9 +17,6 @@
     <div class="card-desc panel-body">
       <h2>{{ title }}</h2>
       <p>{{ desc }}</p>
-      <a :href="detailUrl">
-        more >
-      </a>
     </div>
     <Modal
         v-model="modalDelete"
@@ -49,6 +47,10 @@
       img: {
         type: String,
         default: require('@/assets/images/img-1.jpg')
+      },
+      video: {
+        type: String,
+        default: ''
       },
       desc: {
         type: String,

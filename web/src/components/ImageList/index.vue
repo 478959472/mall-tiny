@@ -5,10 +5,14 @@
         {{ title }}
       </div>
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
-       <div class="search-bar">
-          <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
-          <Button type="ghost" @click="search"><i class="fa fa-search"></i></Button>
-        </div>
+        <Row type="flex" align="left">
+          <Button type="ghost" @click="add"><i class="fa ">新建</i></Button>
+          <div class="search-bar">
+<!--            <Input placeholder="Please enter ..." v-model="keyword" style="width: 150px"></Input>-->
+            <Button type="ghost" @click="search"><i class="fa fa-search"></i></Button>
+          </div>
+        </Row>
+
         <Row type="flex" align="middle" class="page">
           <span>Show</span>
           <Input :max="40" :min="1" :number="true" v-model="showNum" class="input-number" @on-change=" updateDataShow "></Input>
@@ -18,9 +22,9 @@
         </Row>
       </Row>
     </Row>
-    <Row class="image-list" :gutter="16">
+    <Row class="image-list" :gutter="16" style="margin: 0">
       <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
-        <VmCard :editable="true" :title="item.title" :img="item.img" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></VmCard>
+        <VmCard :editable="true" :title="item.title" :img="item.img" :video="item.video" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></VmCard>
       </Col>
     </Row>
   </div>
@@ -47,6 +51,7 @@
               id: '19920805',
               title: 'Title',
               img: require('@/assets/images/img-1.jpg'),
+              video: '',
               desc: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry,Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s ly dummy tly dummy tly dummy tly dummy tly dummy tly dummy t',
               to: '#'
             }
@@ -74,16 +79,10 @@
       },
       search: function () {
         let that = this
-        let tempData = that.data
-        that.dataShow = []
-        tempData.forEach(function (elem) {
-          for (let i in elem) {
-            if (elem[i].toString().indexOf(that.keyword) > -1) {
-              that.dataShow.push(elem)
-              return
-            }
-          }
-        })
+        this.$emit('search-list', that.keyword)
+      },
+      add: function () {
+        this.$emit('add-one')
       },
       deleteOk: function (data) {
         this.$emit('delete-ok', data)

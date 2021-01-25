@@ -70,7 +70,12 @@ public class TestServiceImpl implements TestService {
             List<VideoVO> voList = JSON.parseArray(data.toJSONString(),VideoVO.class);
             voList = voList.stream().peek(videoVO -> {
                 String baseUrl = "https://resources.laihua.com/";
-                videoVO.setThumbnailUrl(baseUrl+videoVO.getThumbnailUrl());
+                if(StringUtils.isNotEmpty(videoVO.getThumbnailUrl())){
+                    String[] thumbnailUrls = videoVO.getThumbnailUrl().split(",");
+                    if(thumbnailUrls.length > 0){
+                        videoVO.setThumbnailUrl(baseUrl+thumbnailUrls[0]);
+                    }
+                }
                 videoVO.setUrl(baseUrl+videoVO.getUrl());
             }).collect(Collectors.toList());
             return voList;

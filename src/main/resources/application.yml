@@ -50,6 +50,7 @@ secure:
       - /admin/logout
       - /laihua/login
       - /laihua/my-videos
+      - /laihua/my-laihua
 
 # http 连接池
 http:

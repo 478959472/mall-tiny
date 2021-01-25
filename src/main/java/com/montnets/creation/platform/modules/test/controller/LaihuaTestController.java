@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author montnets
@@ -34,7 +36,18 @@ public class LaihuaTestController {
     @RequestMapping(value = "/my-videos", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult listMyVideo() {
-        String token = request.getHeader("laihuaToken");
+        String token = "EGG_SESS=nk0ZLUGdokkxAa5KBQBAEIdeA43UEluXnoo9w28REThCtpzy3LbVncaSD7Nk32LB";//request.getHeader("laihuaToken");
         return CommonResult.success(testService.listMyVideo(token));
+    }
+
+    @ApiOperation("跳转到来画平台")
+    @RequestMapping(value = "/my-laihua", method = RequestMethod.GET)
+    public void myLaihua(HttpServletResponse response) {
+        response.addHeader("cookie", "EGG_SESS=nk0ZLUGdokkxAa5KBQBAEIdeA43UEluXnoo9w28REThCtpzy3LbVncaSD7Nk32LB");
+        try {
+            response.sendRedirect("https://common.laihua.com/v1/oauth2/userInfo");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
